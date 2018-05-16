@@ -1,0 +1,17 @@
+file="usd.buy"
+
+if [ -s $file ]
+then
+ echo "from file"
+ usd_buy=$(cat $file)
+
+else
+echo "from site"
+usd_buy=$(curl 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5' | jq .[0].buy)
+echo $usd_buy > file
+fi
+ echo "current"
+echo $usd_buy
+
+[ "$(diff -q file3 skr)" ] && echo -e " курс валют не изменился: $b" | mutt -s"курс валют" predalien1202@gmail.com || echo "курс валют изменился"
+
